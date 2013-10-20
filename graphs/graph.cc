@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    Graph g(5, false);
+    Graph g(6, true);
 
     g.addEdge(0, 1, 0);
     g.addEdge(0, 4, 0);
@@ -21,7 +21,16 @@ int main(int argc, char *argv[]) {
     g.bft(2);
     g.bft(3);
     g.bft(4);
+    g.bft(5);
 
+    g.connectedComponents();
+
+    g.dft(0);
+    g.dft(1);
+    g.dft(2);
+    g.dft(3);
+    g.dft(4);
+    g.dft(5);
 
     return(0);
 }

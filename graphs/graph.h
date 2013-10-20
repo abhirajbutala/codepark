@@ -40,18 +40,45 @@ class Edge {
 
 class Graph {
     private:
-        int nvertices;  // Number of vertices in graph
-        int nedges;     // Number of edges in graph
-        bool directed;  // If the graph is directed or not
-        list<Edge> *adjList; // Pointer to an array containing adjacency lists
+        int nvertices;          // Number of vertices in graph
+        int nedges;             // Number of edges in graph
+        bool directed;          // If the graph is directed or not
+        list<Edge> *adjList;    // Array containing adjacency lists
         typedef list<Edge>::iterator adjListItr;
 
-        void process_vertex_early(int vertex) {
+        // Following arrays need initialization every time graph is travsered
+        bool *discovered;       // Array to track discovered vertices
+        bool *processed;        // Array to track processed vertices
+        void initializeTraversal() {
+            for (int i = 0; i < this->nvertices; i++) {
+                discovered[i] = processed[i] = false;
+            }
+        }
+
+        void processVertexEarly(int vertex) {
             cout << "Processed vertex: " << vertex << endl;
         }
-        void process_vertex_late(int vertex) {
+        void processVertexLate(int vertex) {
         }
-        void process_edge(int vertex, int y) {
+        void processEdge(int vertex, int y) {
+        }
+
+        void dftRecursive(int vertex) {
+            discovered[vertex] = true;
+            processVertexEarly(vertex);
+
+            list<Edge> temp = adjList[vertex];
+            for (adjListItr it = temp.begin(); it != temp.end(); it++) {
+                int y = (*it).get_y();
+                if (discovered[y] == false) {
+                    processEdge(vertex, y);
+                    dftRecursive(y);
+                } else if (processed[y] == false || directed == true) {
+                    processEdge(vertex, y);
+                }
+            }
+            processVertexLate(vertex);
+            processed[vertex] = true;
         }
 
     public:
@@ -60,6 +87,8 @@ class Graph {
             this->nedges = 0;
             this->directed = directed;
             adjList = new list<Edge>[nvertices];
+            discovered = new bool[nvertices];
+            processed = new bool[nvertices];
         }
 
         ~Graph() {
@@ -91,19 +120,12 @@ class Graph {
         }
 
         void bft(int start) {
-            bool discovered[nvertices];
-            bool processed[nvertices];
-
-            // Validate start vertex
             if (start < 0 || start >= nvertices) {
                 cout << "Error: vertex out of range." << endl;
             }
 
             cout << "Breadth First Traversal (start vertex: " << start << ")" << endl;
-            // Initialize
-            for (int i = 0; i < this->nvertices; i++) {
-                discovered[i] = processed[i] = false;
-            }
+            initializeTraversal();
 
             queue<int> myqueue;
             myqueue.push(start);
@@ -112,24 +134,47 @@ class Graph {
             while(!myqueue.empty()) {
                 int vertex = myqueue.front();
                 myqueue.pop();
-                process_vertex_early(vertex);
+                processVertexEarly(vertex);
                 processed[vertex] = true;
 
                 list<Edge> temp = adjList[vertex];
                 for (adjListItr it = temp.begin(); it != temp.end(); it++) {
                     int y = (*it).get_y();
                     if (processed[y] == false || this->directed) {
-                        process_edge(vertex, y);
+                        processEdge(vertex, y);
                     }
                     if (discovered[y] == false) {
                         myqueue.push(y);
                         discovered[y] = true;
                     }
                 }
-                process_vertex_late(vertex);
+                processVertexLate(vertex);
             }
         }
 
+        void connectedComponents() {
+            int c = 0;  // Component Number
+
+            initializeTraversal();
+            for (int i = 0; i < this->nvertices; i++) {
+                if (discovered[i] == false) {
+                    c = c + 1;
+                    cout << "Component " << c << ": ";
+                    bft(i);
+                    cout << endl;
+                }
+            }
+        }
+
+        void dft(int start) {
+            if (start < 0 || start >= nvertices) {
+                cout << "Error: vertex out of range." << endl;
+            }
+
+            cout << "Depth First Traversal (start vertex: " << start << ")" << endl;
+            initializeTraversal();
+            dftRecursive(start);
+        }
 };
 
 #endif
