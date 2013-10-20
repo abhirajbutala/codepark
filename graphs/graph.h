@@ -29,11 +29,11 @@ class Edge {
             cout << " (" << y << ", " << weight << ") ";
         }
 
-        int get_y() {
+        int getY() {
             return y;
         }
 
-        int get_weight() {
+        int getWeight() {
             return weight;
         }
 };
@@ -69,7 +69,7 @@ class Graph {
 
             list<Edge> temp = adjList[vertex];
             for (adjListItr it = temp.begin(); it != temp.end(); it++) {
-                int y = (*it).get_y();
+                int y = (*it).getY();
                 if (discovered[y] == false) {
                     processEdge(vertex, y);
                     dftRecursive(y);
@@ -139,7 +139,7 @@ class Graph {
 
                 list<Edge> temp = adjList[vertex];
                 for (adjListItr it = temp.begin(); it != temp.end(); it++) {
-                    int y = (*it).get_y();
+                    int y = (*it).getY();
                     if (processed[y] == false || this->directed) {
                         processEdge(vertex, y);
                     }
