@@ -1,6 +1,3 @@
-THEORY
-======
-
 Selection Sort
 ==============
 In a loop, select the next minimum element and put it in sorted order.
