@@ -80,3 +80,81 @@ a given chunk. Such a chunk is called strongly connected component. Can be done
 using DFT.
 
 TODO: Implement method for finding strongly connected components in a DAG.
+
+
+Weighted Graphs
+===============
+
+
+Minimum Spanning Trees
+======================
+A spanning tree of a graph G = (V,E) is a subset of edges from E forming a
+tree connecting all vertices of V. For edge-weighted graphs, we are
+particularly interested in the minimum spanning tree—the spanning tree whose
+sum of edge weights is as small as possible.
+
+Finding spanning trees for unweighted graphs can be easily done using either
+BFT or DFT, because all trees are minimum. But finding minimum spanning trees
+for weighted graphs is more difficult. Following two algorithms use greedy
+heuristics for finding MST for weighted graphs:
+
+
+Prim's Algorithm
+----------------
+Start from any vertex. Select the next adjacent vertex such that the weight
+of the edge between these vertices is minimum. Repeat this in a loop.
+
+Prim-MST(G)
+    Select an arbitrary vertex s to start the tree from.
+    While (there are still nontree vertices)
+        Select the edge of minimum weight between a tree and nontree vertex
+        Add the selected edge and vertex to the tree Tprim.
+
+Prim's algo creates a spanning tree for sure. We can prove by contradiction
+that it is the 'minimum' spanning tree.
+
+TODO: Implement Prim's algorithm
+
+TODO: Analysis
+
+
+Kruskal's Algorithm
+-------------------
+Kruskal's algorithm is also greedy. but it does not start with a particular
+vertex. It builds up connected components of vertices, culminating in a
+minimum spanning tree. The algorithm repeatedly considers the lightest
+remaining edge and tests whether its two endpoints lie within the same
+connected component. If so, this edge will be discarded, because adding it
+would create a cycle in the tree to-be. If the endpoints are in different
+components, we insert the edge and merge the two components into one. Since
+each connected component is always a tree, we need never explicitly test for
+cycles.
+
+'''
+Kruskal-MST(G)
+    Put the edges in a priority queue ordered by weight.
+    count = 0
+    while (count < n − 1) do
+        get next edge (v,w)
+        if (component (v) = component(w))
+            add to Tkruskal
+            merge component(v) and component(w)
+'''
+
+TODO: Implement Kruskal's algorithm
+
+TODO: Analysis
+
+
+Shortest Paths in Weighted Graphs
+=================================
+Shortest paths in unweighted graphs can be found using BFT. But for weighted
+graphs, BFT is not enough. Following two algorithms can be used in this case:
+
+
+Dijkstra's Algorithm
+--------------------
+
+
+
+
