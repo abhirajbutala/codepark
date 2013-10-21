@@ -60,6 +60,10 @@ a cycle in a graph. Can be done easily in processEdge() method during dft.
 point of failure nodes; If we remove the edge between them, the graph can be
 disconnected into two sub graphs.
 
+* Solving puzzles with only one solution, such as mazes. DFT can be adapted
+to find all solutions to a maze by only including nodes on the current path
+in the visited set.
+
 
 DFT on Directed Graphs
 ======================
