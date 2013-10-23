@@ -134,7 +134,6 @@ components, we insert the edge and merge the two components into one. Since
 each connected component is always a tree, we need never explicitly test for
 cycles.
 
-'''
 Kruskal-MST(G)
     Put the edges in a priority queue ordered by weight.
     count = 0
@@ -143,7 +142,6 @@ Kruskal-MST(G)
         if (component (v) = component(w))
             add to Tkruskal
             merge component(v) and component(w)
-'''
 
 TODO: Implement Kruskal's algorithm
 
