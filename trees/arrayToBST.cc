@@ -28,6 +28,7 @@ void printTree(Node *root) {
     }
 }
 
+/*---------------------------------------------------------------------------*/
 Node * arrayToBST(int *arr, int start, int end) {
     if (arr == NULL) {
         return NULL;
@@ -58,10 +59,32 @@ Node * arrayToBST(int *arr, int start, int end) {
     }
 }
 
-int main () {
-    int arr[] = {1, 1, 3, 4, 5};
+/*---------------------------------------------------------------------------*/
+// Approach 2: Better and clean code
+Node * arrayToBST1(int *arr, int start, int end) {
+    if (end < start) {
+        return NULL;
+    }
 
-    Node *root = arrayToBST(arr, 0, 4);
+    int mid = (start + end)/2;
+    Node *current = getNewNode();
+    current->value = arr[mid];
+    current->left = arrayToBST1(arr, start, mid-1);
+    current->right = arrayToBST1(arr, mid + 1, end);
+    return current;
+}
+
+
+/*---------------------------------------------------------------------------*/
+int main () {
+    int arr[] = {1, 2, 3, 4, 5, 6};
+
+    Node *root = arrayToBST(arr, 0, 5);
     printTree(root);
+    printf("\n");
+
+    Node *root1 = arrayToBST1(arr, 0, 5);
+    printTree(root1);
+    printf("\n");
 }
 
