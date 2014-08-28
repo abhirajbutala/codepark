@@ -1,4 +1,5 @@
 #include<iostream>
+#include<stack>
 
 using namespace std;
 
@@ -147,6 +148,30 @@ void postOrderTraversal(Node * root) {
 
 
 /*---------------------------------------------------------------------------*/
+void preOrderNonRecursive(Node * root) {
+    stack<Node *> myStack;
+
+    if (root == NULL) {
+        return;
+    }
+
+    myStack.push(root);
+    while (!myStack.empty()) {
+        Node *temp = myStack.top();
+        cout << "\t" << temp->value;
+        myStack.pop();
+
+        if (temp->right != NULL) {
+            myStack.push(temp->right);
+        }
+        if (temp->left != NULL) {
+            myStack.push(temp->left);
+        }
+    }
+}
+
+
+/*---------------------------------------------------------------------------*/
 void findInOrderSuccessor(Node *root, int elem, bool *flag) {
     if (root == NULL) {
         return;
@@ -168,7 +193,19 @@ void findInOrderSuccessor(Node *root, int elem, bool *flag) {
 
 
 /*---------------------------------------------------------------------------*/
+Node * lowestCommonAncestorBST(Node *root, int low, int high) {
 
+    while (root != NULL) {
+        if (root->value > low && root->value > high) {
+            root = root->left;
+        } else if (root->value < low && root->value < high) {
+            root = root->right;
+        } else {
+            return root;
+        }
+    }
+    return NULL;
+}
 
 
 /*---------------------------------------------------------------------------*/
@@ -192,18 +229,21 @@ int main () {
 
     // Tree Traversals
     // Preorder
-    cout << "Pre Order Traversal :";
+    cout << "Pre Order Traversal \t\t\t:";
     preOrderTraversal(root);
     cout << endl;
+    // Preorder Non-Recursive
+    cout << "Pre Order Traversal Non-Recursive \t:";
+    preOrderNonRecursive(root);
+    cout << endl;
     // Inorder
-    cout << "In Order Traversal :";
+    cout << "In Order Traversal \t\t\t:";
     inOrderTraversal(root);
     cout << endl;
     // Postorder
-    cout << "Post Order Traversal :";
+    cout << "Post Order Traversal \t\t\t:";
     postOrderTraversal(root);
     cout << endl;
-
 
     // Find in-order successor of a given node in the tree
     bool flag = false;
@@ -211,10 +251,16 @@ int main () {
     findInOrderSuccessor(root, -1, &flag);
     findInOrderSuccessor(root, 13, &flag);
 
+    // Lowest Common Ancestor in BST
+    Node *temp = lowestCommonAncestorBST(root, 5, 9);
+    cout << "Lowest Common Ancestor BST of 5 & 9 \t:" << temp->value << endl;
+    temp = lowestCommonAncestorBST(root, 8, 9);
+    cout << "Lowest Common Ancestor BST of 8 & 9 \t:" << temp->value << endl;
+    temp = lowestCommonAncestorBST(root, 1, 4);
+    cout << "Lowest Common Ancestor BST of 1 & 4 \t:" << temp->value << endl;
+
     // DFS
-
     // BFS
-
 
     // Delete an element into BST
     root = deleteElementBST(root, 4);

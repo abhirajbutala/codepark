@@ -9,4 +9,10 @@ Tree Problems
 * In-Order traversal on binary trees.
 * Post-Order traversal on binary trees.
 
+* Pre-Order traversal without recursion.
+
 * In-Order successor of an element in a binary tree.
+* Lowest Common Ancestor in a BST
+
+* BFS for an element in a tree
+* DFS for an element in a tree
