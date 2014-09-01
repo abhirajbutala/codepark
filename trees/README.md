@@ -16,3 +16,5 @@ Tree Problems
 
 * BFS for an element in a tree
 * DFS for an element in a tree
+
+* Clone a binary tree
